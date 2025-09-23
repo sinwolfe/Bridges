@@ -4,6 +4,9 @@ import type { Actions, PageServerLoad } from './$types';
 export const load: PageServerLoad = async ({ locals }) => {
   // send to dashboard if alr logged in	
   if (locals.user) {
+    if (locals.user.isAdmin) {
+        throw redirect(302, '/admin');
+    }
     throw redirect(302, '/dashboard');
   }
   return {};
@@ -23,6 +26,10 @@ export const actions: Actions = {
       await locals.pb.collection('users').authWithPassword(usernameOrEmail, password);
     } catch (err) {
       return fail(400, { message: 'Invalid credentials.' });
+    }
+
+    if (locals.pb.authStore.record?.isAdmin) {
+        throw redirect(303, '/admin');
     }
 
     throw redirect(303, '/dashboard');
