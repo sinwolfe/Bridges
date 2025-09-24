@@ -85,7 +85,7 @@
 
 	<hr />
 	<div><small>no tracking. metadata stripped from uploads.</small></div>
-	<div class="muted" style="margin-top:.5rem">
+	<div class="muted signin-link">
 		already have an account? <a href="/login">sign in</a>
 	</div>
 </main>
@@ -192,5 +192,8 @@
 		margin-top: 0.25rem;
 		font-size: 0.85rem;
 		color: #ffb4a2;
+	}
+	.signin-link {
+		margin-top: 0.5rem
 	}
 </style>
