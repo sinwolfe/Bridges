@@ -28,7 +28,7 @@ export const actions: Actions = {
 
 		try {
 			await locals.pb.collection('users').create({
-				username: data.username,
+				username: data.username.trim(),
 				password: data.password,
 				passwordConfirm: data.passwordConfirm
 			});
