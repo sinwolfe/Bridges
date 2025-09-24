@@ -37,5 +37,32 @@
 			<span>source code</span>
 		</a>
 	</div>
+    
+	<section>
+		{#each contributors as contributor}
+			<fieldset>
+				<legend>
+					<div class="legend-content">
+						<img
+							src={`https://github.com/${contributor.name}.png?size=40`}
+							alt={`GitHub profile for ${contributor.name}`}
+							class="avatar"
+							width="40"
+							height="40"
+						/>
+						<a href={contributor.url} target="_blank" rel="noopener noreferrer">
+							{contributor.name}
+						</a>
+					</div>
+				</legend>
+				<p>{contributor.notes}</p>
+			</fieldset>
+		{/each}
+	</section>
 
+	<hr />
+
+	<footer>
+		<small>built with a focus on simplicity and privacy.</small>
+	</footer>
 </main>
