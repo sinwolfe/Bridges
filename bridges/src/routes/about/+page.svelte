@@ -9,9 +9,18 @@
 </svelte:head>
 
 <main>
-	<header>
-		<h1>bridges</h1>
-		<div class="muted">a minimal file sharing utility</div>
+    <header>
+        <img
+            src="https://raw.githubusercontent.com/sinwolfe/Bridges/refs/heads/main/images/bridges.png"
+			alt="bridges project logo"
+			class="project-logo"
+			width="80"
+			height="80"
+        />
+        <div>
+            <h1>bridges</h1>
+			<div class="muted">a minimal file sharing utility</div>
+        </div>
 	</header>
 
     <hr />
