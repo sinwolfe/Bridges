@@ -37,34 +37,5 @@ export const actions: Actions = {
     }
 
     throw redirect(303, '/dashboard');
-  },
-
-  register: async ({ request, locals }) => {
-    const form = await request.formData();
-    const username = String(form.get('username') ?? '').trim();
-    const password = String(form.get('password') ?? '');
-    const passwordConfirm = String(form.get('passwordConfirm') ?? '');
-
-    if (!username || !password || !passwordConfirm) {
-      return fail(400, { message: 'Please fill in all fields.' });
-    }
-    if (password !== passwordConfirm) {
-      return fail(400, { message: 'Passwords do not match.' });
-    }
-
-    try {
-      await locals.pb.collection('users').create({
-        username,
-        password,
-        passwordConfirm
-      });
-
-      await locals.pb.collection('users').authWithPassword(username, password);
-    } catch (err: any) {
-
-      return fail(400, { message: 'Registration failed.', detail: err?.message });
-    }
-
-    throw redirect(303, '/dashboard');
   }
 };
