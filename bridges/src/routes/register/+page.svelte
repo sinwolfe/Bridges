@@ -14,7 +14,7 @@
 <main>
 	<header>
 		<h1>Bridges</h1>
-		<div class="muted">privacy-first file links</div>
+		<div class="muted">a minimal file sharing utility</div>
 	</header>
 
 	<form method="POST" use:enhance>
