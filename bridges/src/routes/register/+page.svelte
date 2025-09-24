@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	const USERNAME_PATTERN = '^[a-zA-Z0-9_.-]{4,32}$';
 
 	export let form:
 		| {
@@ -26,7 +27,7 @@
 				name="username"
 				type="text"
 				required
-				pattern="^[a-zA-Z0-9_.-]{4,32}$"
+				pattern={USERNAME_PATTERN}
 				autocomplete="username"
 				value={form?.values?.username ?? ''}
 				aria-invalid={form?.errors?.username ? 'true' : 'false'}
