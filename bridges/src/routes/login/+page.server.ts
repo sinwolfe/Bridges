@@ -1,5 +1,6 @@
 import { fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
+import { ClientResponseError } from 'pocketbase';
 
 export const load: PageServerLoad = async ({ locals }) => {
   // send to dashboard if alr logged in	
@@ -25,7 +26,10 @@ export const actions: Actions = {
     try {
       await locals.pb.collection('users').authWithPassword(usernameOrEmail, password);
     } catch (err) {
-      return fail(400, { message: 'Invalid credentials.' });
+      if (err instanceof ClientResponseError && err.status === 400) {
+        return fail(400, { message: 'Invalid credentials.' });
+      }
+      return fail(500, { message: 'Something went wrong on our end. Please try again' });
     }
 
     if (locals.pb.authStore.record?.isAdmin) {
