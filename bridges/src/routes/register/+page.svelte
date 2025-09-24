@@ -141,8 +141,8 @@
 		display: block;
 		margin: 0.5rem 0 0.25rem;
 	}
-	input[type='password'],
-	input:not([type]) {
+	input[type='text'],
+	input[type='password'] {
 		width: 100%;
 		padding: 0.5rem 0.6rem;
 		border: 1px solid var(--line);
