@@ -11,6 +11,8 @@ node_modules/
 build/
 
 # Media
+pocketbase/pb_data/storage
+pocketbase/pb_data/backups
 
 # Misc
 .DS_Store
