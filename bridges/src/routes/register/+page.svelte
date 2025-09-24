@@ -72,6 +72,7 @@
 			{/if}
 
 			<div class="row">
+				<div class="muted">no email required</div>
 				<button type="submit">create</button>
 			</div>
 
