@@ -37,7 +37,7 @@
 			<span>source code</span>
 		</a>
 	</div>
-    
+
 	<section>
 		{#each contributors as contributor}
 			<fieldset>
@@ -66,3 +66,112 @@
 		<small>built with a focus on simplicity and privacy.</small>
 	</footer>
 </main>
+
+<style>
+	:root {
+		--bg: #232025;
+		--fg: #efd5c5;
+		--muted: #8f8886;
+		--line: #3b393e;
+		--accent: #6fb3c0;
+	}
+
+	* {
+		box-sizing: border-box;
+	}
+
+	:global(body) {
+		margin: 0;
+		background: var(--bg);
+		color: var(--fg);
+		font: 15px/1.5 monospace;
+	}
+
+	main {
+		max-width: 640px;
+		margin: 8vh auto 0;
+		padding: 0 1rem;
+	}
+
+	h1 {
+		font-size: 1rem;
+		margin: 0 0 0.25rem 0;
+		font-weight: normal;
+	}
+
+	.muted {
+		color: var(--muted);
+	}
+
+	a {
+		color: var(--accent);
+		text-decoration: none;
+	}
+	a:hover {
+		text-decoration: underline;
+	}
+
+	hr {
+		border: 0;
+		border-top: 1px solid var(--line);
+		margin: 2rem 0;
+	}
+
+	fieldset {
+		border: 1px solid var(--line);
+		padding: 1rem 1.5rem;
+		margin: 0 0 1.25rem 0;
+	}
+
+	legend {
+		padding: 0 0.5rem;
+		font-size: 0.9rem;
+		margin-bottom: 0.5rem;
+	}
+
+	.legend-content {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+	}
+
+	legend a {
+		font-weight: bold;
+	}
+
+	.avatar {
+		width: 40px;
+		height: 40px;
+		border-radius: 4px;
+		border: 1px solid var(--line);
+	}
+
+	p {
+		margin: 0;
+		color: var(--fg);
+	}
+
+	footer {
+		text-align: center;
+		padding-bottom: 2rem;
+	}
+
+	small {
+		color: var(--muted);
+	}
+
+	.github-link {
+		margin: 1.5rem 0;
+	}
+
+	.github-link a {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+	}
+
+	.icon {
+		position: relative;
+		top: -1px;
+	}
+</style>
