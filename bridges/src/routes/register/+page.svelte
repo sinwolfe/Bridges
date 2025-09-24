@@ -24,6 +24,7 @@
 			<input
 				id="u"
 				name="username"
+				type="text"
 				required
 				pattern="^[a-zA-Z0-9_.-]{4,32}$"
 				autocomplete="username"
