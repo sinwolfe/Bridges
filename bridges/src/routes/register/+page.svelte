@@ -16,7 +16,7 @@
 		<div class="muted">privacy-first file links</div>
 	</header>
 
-	<form method="POST" autocomplete="on" use:enhance>
+	<form method="POST" use:enhance>
 		<fieldset>
 			<legend>create account</legend>
 
