@@ -6,6 +6,12 @@ export function load() {
 				url: 'https://github.com/sinwolfe',
 				notes:
 					'Set up the project, designed branding, designed all the UI in figma, implemented login, registration functionality, scaffolded both admin and user dashboard'
+			},
+			{
+				name: 'musabshahh',
+				url: 'https://github.com/musabshahh',
+				notes:
+					'Implemented user dashboard, partially did admin dashboard and upload page'
 			}
 		]
 	};
