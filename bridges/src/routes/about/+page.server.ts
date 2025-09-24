@@ -11,7 +11,7 @@ export function load() {
 				name: 'musabshahh',
 				url: 'https://github.com/musabshahh',
 				notes:
-					'Implemented user dashboard, partially did admin dashboard and upload page'
+					'Implemented user dashboard, partially did admin dashboard and upload page (fixes & tweaks)'
 			},
 			{
 				name: 'dbmanji',
