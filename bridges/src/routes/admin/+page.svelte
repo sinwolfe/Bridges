@@ -43,6 +43,7 @@
                     <tr>
                         <th>User</th>
                         <th>Created</th>
+                        <th>Status</th>
                         <th>Admin</th>
                         <th>Actions</th>
                     </tr>
@@ -54,6 +55,17 @@
                                 <td>@{u.username || u.email}</td>
                                 <td class="nowrap">{new Date(u.created).toLocaleDateString()}</td>
                                 <td>
+                                    {#if u.isVerified}
+                                        {#if u.disabled}
+                                            <span class="bad">disabled</span>
+                                        {:else}
+                                            <span class="ok">verified</span>
+                                        {/if}
+                                    {:else}
+                                        <span class="muted">pending</span>
+                                    {/if}
+                                </td>
+                                <td>
                                     {#if u.isAdmin}
                                         <span class="ok">✓</span>
                                     {:else}
@@ -62,13 +74,20 @@
                                 </td>
                                 <td class="nowrap">
                                     <a class="muted-btn" href={`/admin/users/${u.id}`}>View</a>
-                                
+
+                                    {#if !u.verified}
+                                        <form method="POST" style="display:inline;">
+                                            <input type="hidden" name="id" value={u.id} />
+                                            <button class="btn-ok" formaction="?/verify">Verify</button>
+                                        </form>
+                                    {/if}
+
                                     {#if u.id !== data.user?.id}
                                         <form method="POST" style="display:inline;">
                                             <input type="hidden" name="id" value={u.id} />
-                                            <input type="hidden" name="isAdmin" value={u.isAdmin ? 'true' : 'false'} />
-                                            <button class="btn-warn" formaction="?/toggleAdmin">
-                                                {u.isAdmin ? 'Revoke Admin' : 'Make Admin'}
+                                            <input type="hidden" name="disabled" value={u.disabled ? 'true' : 'false'} />
+                                            <button class="btn-warn" formaction="?/toggleDisable">
+                                                {u.disabled ? 'Enable' : 'Disable'}
                                             </button>
                                         </form>
                                     {/if}
@@ -77,7 +96,7 @@
                         {/each}
                     {:else}
                         <tr>
-                            <td colspan="4" class="muted">No users found.</td>
+                            <td colspan="5" class="muted">No users found.</td>
                         </tr>
                     {/if}
                 </tbody>
