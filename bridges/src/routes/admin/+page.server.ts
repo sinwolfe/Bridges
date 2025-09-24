@@ -6,17 +6,11 @@ export const load: PageServerLoad = async ({ locals }) => {
         const userRecords = await locals.pb.collection('users').getFullList({
             sort: '-created',
         });
-
         const users = userRecords.map(record => structuredClone(record));
-
-        return {
-            users
-        };
+        return { users };
     } catch (err) {
         console.error('Error fetching users:', err);
-        return {
-            users: []
-        };
+        return { users: [] };
     }
 };
 
@@ -27,24 +21,15 @@ export const actions: Actions = {
         throw redirect(303, '/login');
     },
 
-    verify: async ({ locals, request }) => {
+    toggleAdmin: async ({ locals, request }) => {
         const form = await request.formData();
         const id = form.get('id') as string;
+        const isAdmin = form.get('isAdmin') === 'true';
         try {
-            await locals.pb.collection('users').update(id, { isVerified: true });
+            // Toggle admin status
+            await locals.pb.collection('users').update(id, { isAdmin: !isAdmin });
         } catch (err) {
-            console.error('Error verifying user:', err);
-        }
-    },
-
-    toggleDisable: async ({ locals, request }) => {
-        const form = await request.formData();
-        const id = form.get('id') as string;
-        const disabled = form.get('disabled') === 'true';
-        try {
-            await locals.pb.collection('users').update(id, { disabled: !disabled });
-        } catch (err) {
-            console.error('Error toggling user:', err);
+            console.error('Error toggling admin status:', err);
         }
     }
 };
