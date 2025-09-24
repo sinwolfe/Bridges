@@ -196,53 +196,21 @@
   
 	<!-- quick -->
 	<section class="section-box">
-	  <h2 class="section-title">quick</h2>
-	  <div class="section-content">
-		<!-- Dropzone -->
-		<div class="dropzone">
-		  <!-- hidden file input -->
-		  <input 
-			type="file" 
-			id="fileUpload" 
-			class="hidden-input"
-			on:change={handleFileSelect}
-		  />
-		  <!-- Custom buttons inside dropzone -->
-		  <label for="fileUpload" class="custom-file-btn">
-			select file
-		  </label>
-		  
-		  {#if selectedFile}
-			<p class="muted">📂 Selected: {selectedFile.name} ({Math.round(selectedFile.size / 1024)} KB)</p>
-			{#if isUploading}
-			  <p class="upload-status">Uploading...</p>
-			{/if}
-		  {/if}
-		  
-		  {#if selectedFile && !isUploading}
-			<button on:click={handleUpload} class="upload-btn">upload & generate link</button>
-		  {:else if isUploading}
-			<button disabled class="upload-btn disabled">uploading...</button>
-		  {:else}
-			<button disabled class="upload-btn disabled">select a file first</button>
-		  {/if}
-		</div>
+	<h2 class="section-title">quick</h2>
+	<div class="section-content">
+	  <!-- Full-width Upload button -->
+	  <button on:click={() => goto('/upload')} class="action-btn upload-page-btn full-width">
+		Upload
+	  </button>
   
-		<!-- Quick actions -->
-		<div class="quick-actions">
-		  <button on:click={() => goto('/files')} class="action-btn files-btn">your files</button>
-		  <button on:click={() => goto('/links')} class="action-btn links-btn">your links</button>
-		</div>
-  
-		<p class="muted">drag & drop may be supported if enabled</p>
-		
-		{#if uploadError}
-		  <div class="error-message">
-			{uploadError}
-		  </div>
-		{/if}
+	  <!-- Quick actions: your files & your links -->
+	  <div class="quick-actions">
+		<button on:click={() => goto('/files')} class="action-btn files-btn">your files</button>
+		<button on:click={() => goto('/links')} class="action-btn links-btn">your links</button>
 	  </div>
-	</section>
+  
+	</div>
+  </section>
   
 	<!-- Configuration Section (automatically shown after file selection) -->
 	{#if selectedFile}
@@ -834,5 +802,10 @@
 	td {
 	  padding: 0.4rem 0.6rem;
 	  border: 1px solid var(--line);
+	}
+	
+	.full-width {
+  width: 100%;
+  justify-content: center; /* keeps text centered */
 	}
   </style>
