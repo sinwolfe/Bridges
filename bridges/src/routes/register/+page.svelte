@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	const USERNAME_PATTERN = '^[a-zA-Z0-9_.-]{4,32}$';
 
 	export let form:
 		| {
 				message?: string;
-				success?: boolean;
 				errors?: { username?: string; password?: string; passwordConfirm?: string };
 				values?: { username?: string };
 		  }
@@ -14,26 +14,28 @@
 <main>
 	<header>
 		<h1>Bridges</h1>
-		<div class="muted">privacy-first file links</div>
+		<div class="muted">a minimal file sharing utility</div>
 	</header>
 
-	<form method="POST" autocomplete="on" use:enhance>
+	<form method="POST" use:enhance>
 		<fieldset>
 			<legend>create account</legend>
 
 			<label for="u">username</label>
 			<input
-			id="u"
-			name="username"
-			required
-			pattern="^[a-zA-Z0-9_.-]{4,32}$"
-			autocomplete="username"
-			value={form?.values?.username ?? ''}
-			aria-invalid={form?.errors?.username ? 'true' : 'false'}
-			aria-describedby={form?.errors?.username ? 'u-err' : 'u-help'}
+				id="u"
+				name="username"
+				type="text"
+				required
+				pattern={USERNAME_PATTERN}
+				autocomplete="username"
+				value={form?.values?.username ?? ''}
+				aria-invalid={form?.errors?.username ? 'true' : 'false'}
+				aria-describedby={form?.errors?.username ? 'u-err' : 'u-help'}
 			/>
-			<small id="u-help" class="muted">Username must be 4-32 characters long and can include letters, numbers, underscores (_), periods (.), and hyphens (-).</small>
-
+			<small id="u-help" class="muted">
+				4 - 32 characters. Use only letters, numbers, and _ . -
+			</small>
 
 			{#if form?.errors?.username}
 				<div id="u-err" class="err">{form.errors.username}</div>
@@ -41,18 +43,16 @@
 
 			<label for="p1">password</label>
 			<input
-			id="p1"
-			name="password"
-			type="password"
-			required
-			autocomplete="new-password"
-			minlength="4"
-			title="At least 4 characters."
-			aria-invalid={form?.errors?.password ? 'true' : 'false'}
-			aria-describedby={form?.errors?.password ? 'p1-err' : 'p1-help'}
+				id="p1"
+				name="password"
+				type="password"
+				required
+				autocomplete="new-password"
+				minlength="4"
+				aria-invalid={form?.errors?.password ? 'true' : 'false'}
+				aria-describedby={form?.errors?.password ? 'p1-err' : 'p1-help'}
 			/>
 			<small id="p1-help" class="muted">At least 4 characters.</small>
-
 
 			{#if form?.errors?.password}
 				<div id="p1-err" class="err">{form.errors.password}</div>
@@ -61,7 +61,8 @@
 			<label for="p2">confirm password</label>
 			<input
 				id="p2"
-				name="passwordConfirm" type="password"
+				name="passwordConfirm"
+				type="password"
 				required
 				autocomplete="new-password"
 				aria-invalid={form?.errors?.passwordConfirm ? 'true' : 'false'}
@@ -85,11 +86,14 @@
 
 	<hr />
 	<div><small>no tracking. metadata stripped from uploads.</small></div>
-	<div class="muted" style="margin-top:.5rem">already have an account? <a href="/login">sign in</a></div>
+	<div class="muted signin-link">
+		already have an account? <a href="/login">sign in</a>
+	</div>
 </main>
 
 <style>
-	/* maybe this will fix the input box overflowing? idk lol just test/bandaid */
+	/* maybe this will fix the input box overflowing?
+	 idk lol just test/bandaid */
 	/* update: actually maybe this is the proper way.. */
 	:global(*),
 	:global(*::before),
@@ -138,8 +142,8 @@
 		display: block;
 		margin: 0.5rem 0 0.25rem;
 	}
-	input[type='password'],
-	input:not([type]) {
+	input[type='text'],
+	input[type='password'] {
 		width: 100%;
 		padding: 0.5rem 0.6rem;
 		border: 1px solid var(--line);
@@ -189,5 +193,8 @@
 		margin-top: 0.25rem;
 		font-size: 0.85rem;
 		color: #ffb4a2;
+	}
+	.signin-link {
+		margin-top: 0.5rem
 	}
 </style>

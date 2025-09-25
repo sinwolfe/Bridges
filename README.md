@@ -1,4 +1,4 @@
-![bridges logo](https://raw.githubusercontent.com/sinwolfe/Bridges/refs/heads/main/images/bridges-logo-temp-128.png)
+![bridges logo](https://raw.githubusercontent.com/sinwolfe/Bridges/refs/heads/main/images/bridges_128px.png)
 
 # Bridges
 
