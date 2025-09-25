@@ -1,6 +1,6 @@
 <script lang="ts">
     import type { PageData } from './$types';
-    export let data: PageData;
+    export let  data: PageData;
 </script>
 
 <svelte:head>
@@ -43,6 +43,7 @@
                     <tr>
                         <th>User</th>
                         <th>Created</th>
+                        <th>Status</th>
                         <th>Admin</th>
                         <th>Actions</th>
                     </tr>
@@ -53,6 +54,17 @@
                             <tr>
                                 <td>@{u.username || u.email}</td>
                                 <td class="nowrap">{new Date(u.created).toLocaleDateString()}</td>
+                                <td>
+                                    {#if u.isVerified}
+                                        {#if u.disabled}
+                                            <span class="bad">Disabled</span>
+                                        {:else}
+                                            <span class="ok">Enabled</span>
+                                        {/if}
+                                    {:else}
+                                        <span class="muted">Pending</span>
+                                    {/if}
+                                </td>
                                 <td>
                                     {#if u.isAdmin}
                                         <span class="ok">✓</span>
@@ -66,10 +78,12 @@
                                     {#if u.id !== data.user?.id}
                                         <form method="POST" style="display:inline;">
                                             <input type="hidden" name="id" value={u.id} />
-                                            <input type="hidden" name="isAdmin" value={u.isAdmin ? 'true' : 'false'} />
-                                            <button class="btn-warn" formaction="?/toggleAdmin">
-                                                {u.isAdmin ? 'Revoke Admin' : 'Make Admin'}
-                                            </button>
+                                            <input type="hidden" name="disabled" value={u.disabled ? 'true' : 'false'} />
+                                            {#if u.isVerified && !u.disabled}
+                                                <button class="btn-warn" formaction="?/toggleDisable">Disable</button>
+                                            {:else}
+                                                <button class="btn-ok" formaction="?/toggleEnable">Enable</button>
+                                            {/if}
                                         </form>
                                     {/if}
                                 </td>
@@ -77,7 +91,7 @@
                         {/each}
                     {:else}
                         <tr>
-                            <td colspan="4" class="muted">No users found.</td>
+                            <td colspan="5" class="muted">No users found.</td>
                         </tr>
                     {/if}
                 </tbody>

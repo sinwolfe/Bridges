@@ -30,5 +30,27 @@ export const actions: Actions = {
         } catch (err) {
             console.error('Error toggling admin status:', err);
         }
+    },
+
+    toggleEnable: async ({ locals, request }) => {
+        const form = await request.formData();
+        const id = form.get('id') as string;
+        try {
+            // Enable user by setting disabled = false
+            await locals.pb.collection('users').update(id, { disabled: false });
+        } catch (err) {
+            console.error('Error enabling user:', err);
+        }
+    },
+
+    toggleDisable: async ({ locals, request }) => {
+        const form = await request.formData();
+        const id = form.get('id') as string;
+        try {
+            // Disable user by setting disabled = true
+            await locals.pb.collection('users').update(id, { disabled: true });
+        } catch (err) {
+            console.error('Error disabling user:', err);
+        }
     }
 };
