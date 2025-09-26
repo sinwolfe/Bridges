@@ -18,7 +18,7 @@
 
     let tags = "";
 
-    let visibility: "public" | "password" = "unlisted";
+    let visibility: "public" | "password" = "public";
 
     let password = "";
 
