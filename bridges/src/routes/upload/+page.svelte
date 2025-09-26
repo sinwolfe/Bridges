@@ -438,6 +438,12 @@
 	:global(*::after) {
 		box-sizing: border-box;
 	}
+
+    .container {
+        max-width: 480px;
+        margin: 0 auto;
+    }
+
 	.form-section {
 		border: 1px solid var(--line);
 		padding: 1rem;
@@ -498,7 +504,6 @@
 		outline: none;
 		border-color: var(--accent);
 	}
-
 
 	.radio-group {
 		display: grid;
