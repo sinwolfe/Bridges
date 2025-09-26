@@ -1,9 +1,9 @@
 import type { Handle } from '@sveltejs/kit';
 import PocketBase from 'pocketbase';
-import { PB_URL } from '$env/static/private';
+import { PUBLIC_PB_URL } from '$env/static/public';
 
 export const handle: Handle = async ({ event, resolve }) => {
-  const pb = new PocketBase(PB_URL);
+  const pb = new PocketBase(PUBLIC_PB_URL);
 
   pb.authStore.loadFromCookie(event.request.headers.get('cookie') ?? '');
 

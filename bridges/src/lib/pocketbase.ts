@@ -1,7 +1,7 @@
 import PocketBase from 'pocketbase';
-import { PB_URL } from '$env/static/private';
+import { PUBLIC_PB_URL } from '$env/static/public';
 
-export const pb = new PocketBase(PB_URL);
+export const pb = new PocketBase(PUBLIC_PB_URL);
 export default pb;
 
 // Only run this in the browser
