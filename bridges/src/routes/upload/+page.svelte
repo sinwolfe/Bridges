@@ -5,12 +5,10 @@
 
     import { onMount } from 'svelte';
 
-    import PocketBase from 'pocketbase';
+    import { pb } from '$lib/pocketbase';
 
 
     // --- State Variables ---
-
-    let pb: PocketBase;
 
     let files: FileList | null = null;
 
@@ -33,18 +31,6 @@
     let isCreating = false;
 
     let selectedFileName = "No files selected";
-
-
-    // Initialize PocketBase client on component mount
-
-    onMount(() => {
-
-        // Replace with your actual PocketBase server URL
-
-        pb = new PocketBase('http://127.0.0.1:8090');
-
-    });
-
 
     // --- Event Handlers & Logic ---
 
