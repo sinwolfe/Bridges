@@ -430,287 +430,167 @@
 
 
 <style>
-
-    /* Using :global() ensures these styles apply correctly, as they were originally in a global stylesheet */
-
-    :global(*) {
-
-        box-sizing: border-box;
-
-        margin: 0;
-
-        padding: 0;
-
-    }
-
-    :global(:root) {
-
-        --bg-color: #121212;
-
-        --surface-color: #202020;
-
-        --border-color: #383838;
-
-        --text-color: #d1d1d1;
-
-        --text-muted-color: #888888;
-
-        --accent-color: #3d8dff;
-
-        --font-family: 'Source Code Pro', monospace;
-
-    }
-
-    :global(body) {
-
-        background-color: var(--bg-color);
-
-        color: var(--text-color);
-
-        font-family: var(--font-family);
-
-        font-size: 14px;
-
-        display: flex;
-
-        justify-content: center;
-
-        align-items: flex-start;
-
-        padding: 50px 20px;
-
-        min-height: 100vh;
-
-    }
-
-    /* Add other global styles here or wrap the entire CSS block in :global() if preferred */
-
-    .container {
-
-        display: flex;
-
-        flex-wrap: wrap;
-
-        gap: 60px;
-
-        align-items: flex-start;
-
-        justify-content: center;
-
-        width: 100%;
-
-        max-width: 960px;
-
-    }
-
-    .form-container {
-
-        width: 100%;
-
-        max-width: 450px;
-
-    }
-
-    form {
-
-        display: flex;
-
-        flex-direction: column;
-
-        gap: 25px;
-
-    }
-
-    fieldset {
-
-        border: none;
-
-    }
-
-    .form-section {
-
-        border: 1px solid var(--border-color);
-
-        border-radius: 4px;
-
-        padding: 25px 20px 5px 20px;
-
-        position: relative;
-
-    }
-
-    .section-title {
-
-        font-size: 1em;
-
-        font-weight: 400;
-
-        color: var(--text-muted-color);
-
-        text-transform: lowercase;
-
-        background-color: var(--bg-color);
-
-        padding: 0 8px;
-
-        position: absolute;
-
-        top: -9px;
-
-        left: 12px;
-
-    }
-
-    .form-group {
-
-        margin-bottom: 20px;
-
-        display: flex;
-
-        flex-direction: column;
-
-    }
-
-    .form-group label {
-
-        margin-bottom: 8px;
-
-        color: var(--text-color);
-
-    }
-
-    input[type="text"],
-
-    input[type="password"],
-
-    input[type="number"],
-
-    select,
-
-    textarea {
-
-        background-color: var(--surface-color);
-
-        border: 1px solid var(--border-color);
-
-        border-radius: 4px;
-
-        color: var(--text-color);
-
-        padding: 10px;
-
-        font-family: var(--font-family);
-
-        font-size: 1em;
-
-        width: 100%;
-
-        outline: none;
-
-        transition: border-color 0.2s;
-
-    }
-
-    input[type="text"]:focus,
-
-    input[type="password"]:focus,
-
-    input[type="number"]:focus,
-
-    select:focus,
-
-    textarea:focus {
-
-        border-color: var(--accent-color);
-
-    }
-
-    :global(::placeholder) {
-
-        color: var(--text-muted-color);
-
-        opacity: 1;
-
-    }
-
-    .label-hint, .input-hint {
-
-        color: var(--text-muted-color);
-
-        font-weight: 400;
-
-    }
-
-    .file-picker-label {
-
-        background-color: var(--surface-color);
-
-        border: 1px solid var(--border-color);
-
-        border-radius: 4px;
-
-        padding: 10px;
-
-        cursor: pointer;
-
-        color: var(--text-muted-color);
-
-        white-space: nowrap;
-
-        overflow: hidden;
-
-        text-overflow: ellipsis;
-
-    }
-
-    .radio-group { display: flex; flex-direction: column; gap: 10px; }
-
-    .radio-option { display: flex; align-items: center; }
-
-    .radio-option input[type="radio"] { display: none; }
-
-    .radio-option label { margin: 0; cursor: pointer; position: relative; padding-left: 25px; }
-
-    .radio-option label::before { content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 16px; height: 16px; border-radius: 50%; border: 1px solid var(--border-color); background-color: var(--surface-color); }
-
-    .radio-option input[type="radio"]:checked + label::before { border-color: var(--accent-color); }
-
-    .radio-option input[type="radio"]:checked + label::after { content: ''; position: absolute; left: 4px; top: 50%; transform: translateY(-50%); width: 8px; height: 8px; border-radius: 50%; background-color: var(--accent-color); }
-
-    .select-wrapper { position: relative; }
-
-    .select-wrapper::after { content: 'v'; position: absolute; top: 50%; right: 12px; transform: translateY(-50%); pointer-events: none; color: var(--text-muted-color); font-size: 12px; }
-
-    select { appearance: none; -webkit-appearance: none; -moz-appearance: none; }
-
-    .checkbox-group { flex-direction: row; align-items: center; }
-
-    .checkbox-group input[type="checkbox"] { display: none; }
-
-    .checkbox-group label { margin: 0; position: relative; padding-left: 25px; cursor: pointer; }
-
-    .checkbox-group label::before { content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 16px; height: 16px; border: 1px solid var(--border-color); background-color: var(--surface-color); border-radius: 3px; }
-
-    .checkbox-group input[type="checkbox"]:checked + label::before { background-color: var(--accent-color); border-color: var(--accent-color); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='white'%3E%3Cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: center; }
-
-    .result-section { padding-top: 15px; }
-
-    .create-link-btn { background-color: var(--surface-color); border: 1px solid var(--border-color); color: var(--text-color); padding: 10px 15px; font-family: var(--font-family); cursor: pointer; border-radius: 4px; align-self: flex-start; transition: all 0.2s; }
-
-    .create-link-btn:hover { border-color: var(--text-color); }
-
-    .create-link-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-
-    .result-display {
-
-        margin-bottom: 15px;
-
-        color: var(--accent-color);
-
-        word-break: break-all;
-
-    }
-
-    .tip { font-size: 0.85em; color: var(--text-muted-color); }
-
-</style> 
+    /* maybe this will fix the input box overflowing? idk lol just test/bandaid */
+	/* update: actually maybe this is the proper way.. */
+    /* styled by hakimi */
+	:global(*),
+	:global(*::before),
+	:global(*::after) {
+		box-sizing: border-box;
+	}
+	.form-section {
+		border: 1px solid var(--line);
+		padding: 1rem;
+		margin: 0 0 1rem 0;
+	}
+
+	.section-title {
+		position: static;
+		background-color: transparent;
+		padding: 0 0.4rem;
+		color: var(--muted);
+		font-size: 0.85rem;
+		margin-bottom: 0.5rem;
+	}
+
+	label {
+		display: block;
+		margin: 0.6rem 0 0.25rem;
+	}
+
+	.label-hint,
+	.input-hint,
+	.tip {
+		color: var(--muted);
+		font-weight: normal;
+	}
+
+	input[type='text'],
+	input[type='password'],
+	input[type='number'],
+	select {
+		width: 100%;
+		padding: 0.5rem 0.6rem;
+		border: 1px solid var(--line);
+		background: #2b292d;
+		color: var(--fg);
+		font-family: monospace;
+		font-size: 15px;
+		border-radius: 0;
+	}
+
+	.file-picker-label {
+		width: 100%;
+		padding: 0.5rem 0.6rem;
+		border: 1px solid var(--line);
+		background: #2b292d;
+		color: var(--muted);
+		cursor: pointer;
+		display: block;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		border-radius: 0;
+	}
+
+	input:focus,
+	select:focus {
+		outline: none;
+		border-color: var(--accent);
+	}
+
+
+	.radio-group {
+		display: grid;
+		gap: 0.35rem;
+	}
+
+	.radio-option {
+		display: flex;
+		gap: 0.5rem;
+		align-items: center;
+	}
+
+	.radio-option input[type='radio'] {
+		display: inline-block;
+	}
+	.radio-option label::before,
+	.radio-option label::after {
+		display: none;
+	}
+	.radio-option label {
+		padding-left: 0;
+		margin: 0;
+	}
+
+	.checkbox-group {
+		display: flex;
+		gap: 0.5rem;
+		align-items: center;
+		color: var(--muted);
+	}
+	.checkbox-group label {
+		margin: 0;
+	}
+
+	.checkbox-group input[type='checkbox'] {
+		display: inline-block;
+	}
+	.checkbox-group label::before {
+		display: none;
+	}
+
+	.result-section {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+		justify-content: space-between;
+		flex-wrap: wrap;
+	}
+
+	.result-section .section-title {
+		padding: 0;
+		font-size: 1em;
+		color: var(--muted);
+		margin: 0;
+		flex-grow: 1;
+	}
+
+	.create-link-btn {
+		padding: 0.5rem 0.8rem;
+		border: 1px solid var(--accent);
+		background: transparent;
+		color: var(--fg);
+		cursor: pointer;
+		font-family: monospace;
+		font-size: 15px;
+		flex-shrink: 0;
+		border-radius: 0;
+	}
+
+	.create-link-btn:focus {
+		outline: 1px solid var(--accent);
+		outline-offset: 0;
+	}
+
+	.create-link-btn:disabled {
+		opacity: 0.6;
+		cursor: not-allowed;
+		border-color: var(--muted);
+		color: var(--muted);
+	}
+
+	.result-display {
+		color: var(--accent);
+		text-decoration: underline;
+		word-break: break-all;
+		margin-bottom: 1rem;
+		width: 100%;
+	}
+
+	.tip {
+		color: var(--muted);
+		font-size: 0.9rem;
+		margin-top: 1rem;
+	}
+</style>
