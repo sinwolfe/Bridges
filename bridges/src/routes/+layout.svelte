@@ -1,10 +1,23 @@
+<script>
+	export let data;
+</script>
+
 <main>
 	<slot />
 </main>
 
 <footer>
 	<a href="/">home</a>
+
+	{#if data.user}
+		<a href="/upload">upload</a>
+	{/if}
+
 	<a href="/about">about</a>
+
+	{#if data.user && data.user.isAdmin}
+		<a href="/admin">admin</a>
+	{/if}
 </footer>
 
 <style>
