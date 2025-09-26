@@ -1,5 +1,5 @@
 import { redirect } from '@sveltejs/kit';
-import { pb } from '$lib/pocketbase'; // Make sure you have PocketBase set up
+import { pb } from '$lib/pocketbase'; // Ensure you have PocketBase set up
 import type { Actions, PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ locals }) => {
@@ -26,20 +26,21 @@ export const load: PageServerLoad = async ({ locals }) => {
     // Calculate the dashboard data
     const totalFiles = files.length;
     const totalLinks = links.length;
-    const totalViews = links.reduce((acc, link) => acc + (link.view_count || 0), 0);
-    const totalDownloads = links.reduce((acc, link) => acc + (link.download_count || 0), 0);
+
+    // Handle link views and downloads by ensuring the fields exist
+    const totalViews = links.reduce((acc, link) => acc + (link.view_count ?? 0), 0);  // Use nullish coalescing to handle null or undefined
+    const totalDownloads = links.reduce((acc, link) => acc + (link.download_count ?? 0), 0);
 
     // Calculate expiring soon (within next 7 days)
     const now = Date.now();
-    const sevenDaysFromNow = now + (7 * 24 * 60 * 60 * 1000);
-    const expiringSoon = links.filter(link => 
-      link.expires_at && 
-      new Date(link.expires_at).getTime() > now && 
-      new Date(link.expires_at).getTime() <= sevenDaysFromNow
-    ).length;
+    const sevenDaysFromNow = now + (7 * 24 * 60 * 60 * 1000);  // 7 days in milliseconds
+    const expiringSoon = links.filter(link => {
+      const expirationDate = link.expires_at ? new Date(link.expires_at) : null;
+      return expirationDate && expirationDate.getTime() > now && expirationDate.getTime() <= sevenDaysFromNow;
+    }).length;
 
-    // Calculate storage used (assuming each file has a 'size' field)
-    const storageUsed = files.reduce((acc, file) => acc + (file.size || 0), 0) / (1024 * 1024); // MB
+    // Calculate storage used (assuming each file has a 'size' field in bytes)
+    const storageUsed = files.reduce((acc, file) => acc + (file.size ?? 0), 0) / (1024 * 1024); // Convert bytes to MB
 
     return {
       user: locals.user,
