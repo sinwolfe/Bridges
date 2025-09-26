@@ -119,6 +119,7 @@
 		min-height: 100vh;
 		display: grid;
 		place-content: center;
+		padding-bottom: 20vh;
 	}
 	main {
 		max-width: 420px;
