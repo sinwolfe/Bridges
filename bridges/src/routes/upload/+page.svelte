@@ -308,7 +308,7 @@
 
                             <input type="radio" id="public" bind:group={visibility} value="public" />
 
-                            <label for="public">public</label>
+                            <label for="public">anyone with the link</label>
 
                         </div>
 
@@ -316,7 +316,7 @@
 
                             <input type="radio" id="password-protected" bind:group={visibility} value="password" />
 
-                            <label for="password-protected">password protected</label>
+                            <label for="password-protected">protect with a password</label>
 
                         </div>
 
