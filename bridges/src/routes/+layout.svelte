@@ -27,6 +27,9 @@
 		--muted: #8f8886;
 		--line: #3b393e;
 		--accent: #6fb3c0;
+        --ok: #51b04f;
+	    --warn: #d09950;
+	    --bad: #ff7a5f;
 	}
 
 	* {
