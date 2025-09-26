@@ -29,7 +29,7 @@ export async function load({ params }) {
                 await pb.collection('uploads').update(upload.id, { 'downloadLimit-': 1 });
             }
             
-            const fileUrl = pb.files.getUrl(upload, upload.file);
+            const fileUrl = pb.files.getURL(upload, upload.file);
             throw redirect(302, fileUrl);
         }
 
@@ -75,7 +75,7 @@ export const actions = {
                 await pb.collection('uploads').update(upload.id, { 'downloadLimit-': 1 });
             }
 
-            const fileUrl = pb.files.getUrl(upload, upload.file);
+            const fileUrl = pb.files.getURL(upload, upload.file);
             throw redirect(303, fileUrl);
 
         } catch (err: any) {
