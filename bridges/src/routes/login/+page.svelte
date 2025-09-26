@@ -118,12 +118,16 @@
 		background: var(--bg);
 		color: var(--fg);
 		font: 15px/1.5 monospace;
+		min-height: 100vh;
+		display: grid;
+		place-content: center;
+		padding-bottom: 20vh;
 	}
 
 	main {
 		max-width: 420px;
-		margin: 10vh auto 0;
 		padding: 0 1rem;
+		width: 100%
 	}
 	h1 {
 		font-size: 1rem;
