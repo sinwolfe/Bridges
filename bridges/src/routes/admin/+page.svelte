@@ -106,16 +106,6 @@
     :global(*::after) {
         box-sizing: border-box;
     }
-    :root {
-        --bg: #232025;
-        --fg: #efd5c5;
-        --muted: #8f8886;
-        --line: #3b393e;
-        --accent: #6fb3c0;
-        --ok: #51b04f;
-        --warn: #d09950;
-        --bad: #ff7a5f;
-    }
     main {
         max-width: 980px;
         margin: 6vh auto;
