@@ -1,0 +1,30 @@
+/// pb_hooks/links.js
+export default function (router, pb) {
+  // Resolve a link by slug
+  router.get('/l/:slug', async (c) => {
+    const slug = c.req.param('slug');
+    const link = await pb.collection('links').getFirstListItem(`slug="${slug}"`);
+
+    // check expiry
+    if (link.expiryAt && new Date(link.expiryAt) < new Date()) {
+      return c.json(410, { error: 'Link expired' });
+    }
+
+    // check revoked
+    if (link.revoked) {
+      return c.json(403, { error: 'Link revoked' });
+    }
+
+    // check download/view limits
+    if (link.downloadLimit && link.downloadCount >= link.downloadLimit) {
+      return c.json(429, { error: 'Download limit reached' });
+    }
+
+    // update counters
+    await pb.collection('links').update(link.id, {
+      downloadCount: (link.downloadCount || 0) + 1,
+    });
+
+    return c.json({ fileId: link.file, owner: link.owner });
+  });
+}

@@ -29,6 +29,10 @@
 	}
 </script>
 
+<svelte:head>
+	<title>login - bridges</title>
+</svelte:head>
+
 <main>
 	<header>
 		<h1>Bridges</h1>
