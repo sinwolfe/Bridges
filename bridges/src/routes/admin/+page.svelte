@@ -4,7 +4,7 @@
 </script>
 
 <svelte:head>
-	<title>Admin Dashboard</title>
+	<title>admin - bridges</title>
 </svelte:head>
 
 <main>
