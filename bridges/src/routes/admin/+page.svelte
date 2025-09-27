@@ -146,6 +146,7 @@
 		border: 1px solid var(--line);
 		padding: 1rem;
 		margin: 2rem 0 1rem 0;
+		width: 100%;
 	}
 	legend {
 		padding: 0 0.4rem;
@@ -191,6 +192,7 @@
 		width: 100%;
 		border-collapse: collapse;
 		margin-top: 0.5rem;
+		table-layout: fixed;
 	}
 	th,
 	td {
