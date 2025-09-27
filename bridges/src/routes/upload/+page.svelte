@@ -141,6 +141,10 @@
 
         formData.append("title", title || "test upload");
 
+        if (pb.authStore.record) {
+            formData.append('owner', pb.authStore.record.id);
+        }
+
         if (tags) formData.append("tags", tags);
 
         if (visibility) formData.append("visibility", visibility);
