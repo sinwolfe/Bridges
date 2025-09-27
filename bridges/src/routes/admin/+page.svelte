@@ -50,75 +50,77 @@
 			{#if data.error}
 				<p class="bad">{data.error}</p>
 			{/if}
-			<table class="user-management-table">
-				<thead>
-					<tr>
-						<th>User</th>
-						<th class="center">Created</th>
-						<th class="center">Status</th>
-						<th class="center">Admin</th>
-						<th class="center">Actions</th>
-					</tr>
-				</thead>
-				<tbody>
-					{#if data.users?.length}
-						{#each data.users as u (u.id)}
-							<tr>
-								<td><div class="scrollable-cell">@{u.username || u.email}</div></td>
-								<td class="nowrap center">{new Date(u.created).toLocaleDateString()}</td>
-								<td class="center">
-									{#if u.disabled}
-										<span class="bad">Disabled</span>
-									{:else}
-										<span class="ok">Enabled</span>
-									{/if}
-								</td>
-								<td class="center">
-									{#if u.isAdmin}
-										<svg
-											class="checkmark"
-											xmlns="http://www.w3.org/2000/svg"
-											width="24"
-											height="24"
-											viewBox="0 0 24 24"
-											fill="none"
-											stroke="currentColor"
-											stroke-width="2.5"
-											stroke-linecap="round"
-											stroke-linejoin="round"
-											><polyline points="20 6 9 17 4 12" /></svg
-										>
-									{:else}
-										<span class="muted">—</span>
-									{/if}
-								</td>
-								<td class="nowrap center">
-									{#if u.id !== data.user?.id}
-										<form method="POST" style="display:inline;">
-											<input type="hidden" name="id" value={u.id} />
-											<input type="hidden" name="disabled" value={u.disabled ? 'true' : 'false'} />
-
-											{#if u.disabled}
-												<button class="btn-ok action-btn" formaction="?/toggleStatus"
-													>Enable</button
-												>
-											{:else}
-												<button class="btn-warn action-btn" formaction="?/toggleStatus"
-													>Disable</button
-												>
-											{/if}
-										</form>
-									{/if}
-								</td>
-							</tr>
-						{/each}
-					{:else if !data.error}
+			<div class="user-table-wrapper" class:scrollable={data.users && data.users.length > 10}>
+				<table class="user-management-table">
+					<thead>
 						<tr>
-							<td colspan="5" class="muted">No users found.</td>
+							<th>User</th>
+							<th class="center">Created</th>
+							<th class="center">Status</th>
+							<th class="center">Admin</th>
+							<th class="center">Actions</th>
 						</tr>
-					{/if}
-				</tbody>
-			</table>
+					</thead>
+					<tbody>
+						{#if data.users?.length}
+							{#each data.users as u (u.id)}
+								<tr>
+									<td><div class="scrollable-cell">@{u.username || u.email}</div></td>
+									<td class="nowrap center">{new Date(u.created).toLocaleDateString()}</td>
+									<td class="center">
+										{#if u.disabled}
+											<span class="bad">Disabled</span>
+										{:else}
+											<span class="ok">Enabled</span>
+										{/if}
+									</td>
+									<td class="center">
+										{#if u.isAdmin}
+											<svg
+												class="checkmark"
+												xmlns="http://www.w3.org/2000/svg"
+												width="24"
+												height="24"
+												viewBox="0 0 24 24"
+												fill="none"
+												stroke="currentColor"
+												stroke-width="2.5"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+												><polyline points="20 6 9 17 4 12" /></svg
+											>
+										{:else}
+											<span class="muted">—</span>
+										{/if}
+									</td>
+									<td class="nowrap center">
+										{#if u.id !== data.user?.id}
+											<form method="POST" style="display:inline;">
+												<input type="hidden" name="id" value={u.id} />
+												<input type="hidden" name="disabled" value={u.disabled ? 'true' : 'false'} />
+
+												{#if u.disabled}
+													<button class="btn-ok action-btn" formaction="?/toggleStatus"
+														>Enable</button
+													>
+												{:else}
+													<button class="btn-warn action-btn" formaction="?/toggleStatus"
+														>Disable</button
+													>
+												{/if}
+											</form>
+										{/if}
+									</td>
+								</tr>
+							{/each}
+						{:else if !data.error}
+							<tr>
+								<td colspan="5" class="muted">No users found.</td>
+							</tr>
+						{/if}
+					</tbody>
+				</table>
+			</div>
 		</fieldset>
 	</section>
 </main>
@@ -239,6 +241,31 @@
 	.user-management-table th:nth-child(3) { width: 17%; }
 	.user-management-table th:nth-child(4) { width: 13%; }
 	.user-management-table th:nth-child(5) { width: 20%; }
+
+	.user-table-wrapper.scrollable {
+		max-height: 520px;
+		overflow-y: auto;
+		scrollbar-width: thin;
+		scrollbar-color: var(--accent) transparent;
+	}
+
+	.user-table-wrapper.scrollable::-webkit-scrollbar {
+		width: 4px;
+	}
+	.user-table-wrapper.scrollable::-webkit-scrollbar-track {
+		background: transparent;
+	}
+	.user-table-wrapper.scrollable::-webkit-scrollbar-thumb {
+		background-color: var(--accent);
+		border-radius: 20px;
+	}
+
+	.user-management-table thead th {
+		position: sticky;
+		top: -1px;
+		background: #2b292d;
+		z-index: 1;
+	}
 
 	.scrollable-cell {
 		overflow-x: auto;
