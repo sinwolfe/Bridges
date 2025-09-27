@@ -54,10 +54,10 @@
 				<thead>
 					<tr>
 						<th>User</th>
-						<th>Created</th>
-						<th>Status</th>
-						<th>Admin</th>
-						<th>Actions</th>
+						<th class="center">Created</th>
+						<th class="center">Status</th>
+						<th class="center">Admin</th>
+						<th class="center">Actions</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -65,22 +65,22 @@
 						{#each data.users as u (u.id)}
 							<tr>
 								<td>@{u.username || u.email}</td>
-								<td class="nowrap">{new Date(u.created).toLocaleDateString()}</td>
-								<td>
+								<td class="nowrap center">{new Date(u.created).toLocaleDateString()}</td>
+								<td class="center">
 									{#if u.disabled}
 										<span class="bad">Disabled</span>
 									{:else}
 										<span class="ok">Enabled</span>
 									{/if}
 								</td>
-								<td>
+								<td class="center">
 									{#if u.isAdmin}
 										<span class="ok">✓</span>
 									{:else}
 										<span class="muted">—</span>
 									{/if}
 								</td>
-								<td class="nowrap">
+								<td class="nowrap center">
 									{#if u.id !== data.user?.id}
 										<form method="POST" style="display:inline;">
 											<input type="hidden" name="id" value={u.id} />
@@ -196,7 +196,7 @@
 	td {
 		padding: 0.5rem 0.6rem;
 		border: 1px solid var(--line);
-		vertical-align: top;
+		vertical-align: middle;
 	}
 	th {
 		color: var(--muted);
@@ -209,5 +209,8 @@
 	}
 	.nowrap {
 		white-space: nowrap;
+	}
+	.center {
+		text-align: center;
 	}
 </style>
