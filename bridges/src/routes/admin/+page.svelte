@@ -73,8 +73,6 @@
                                     {/if}
                                 </td>
                                 <td class="nowrap">
-                                    <a class="muted-btn" href={`/admin/users/${u.id}`}>View</a>
-                                
                                     {#if u.id !== data.user?.id}
                                         <form method="POST" style="display:inline;">
                                             <input type="hidden" name="id" value={u.id} />
