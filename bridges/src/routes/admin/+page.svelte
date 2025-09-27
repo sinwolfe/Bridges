@@ -22,7 +22,7 @@
 	<section>
 		<fieldset>
 			<legend>Overview</legend>
-			<table>
+			<table class="overview-table">
 				<tbody>
 					<tr>
 						<th>Username</th>
@@ -50,7 +50,7 @@
 			{#if data.error}
 				<p class="bad">{data.error}</p>
 			{/if}
-			<table>
+			<table class="user-management-table">
 				<thead>
 					<tr>
 						<th>User</th>
@@ -75,7 +75,19 @@
 								</td>
 								<td class="center">
 									{#if u.isAdmin}
-										<span class="ok">✓</span>
+										<svg
+											class="checkmark"
+											xmlns="http://www.w3.org/2000/svg"
+											width="24"
+											height="24"
+											viewBox="0 0 24 24"
+											fill="none"
+											stroke="currentColor"
+											stroke-width="2.5"
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											><polyline points="20 6 9 17 4 12" /></svg
+										>
 									{:else}
 										<span class="muted">—</span>
 									{/if}
@@ -87,9 +99,13 @@
 											<input type="hidden" name="disabled" value={u.disabled ? 'true' : 'false'} />
 
 											{#if u.disabled}
-												<button class="btn-ok" formaction="?/toggleStatus">Enable</button>
+												<button class="btn-ok action-btn" formaction="?/toggleStatus"
+													>Enable</button
+												>
 											{:else}
-												<button class="btn-warn" formaction="?/toggleStatus">Disable</button>
+												<button class="btn-warn action-btn" formaction="?/toggleStatus"
+													>Disable</button
+												>
 											{/if}
 										</form>
 									{/if}
@@ -146,7 +162,6 @@
 		border: 1px solid var(--line);
 		padding: 1rem;
 		margin: 2rem 0 1rem 0;
-		width: 100%;
 	}
 	legend {
 		padding: 0 0.4rem;
@@ -182,6 +197,9 @@
 	.muted-btn:hover {
 		color: var(--accent);
 	}
+	.action-btn {
+		min-width: 90px;
+	}
 	.btn-warn {
 		border-color: var(--warn);
 	}
@@ -203,6 +221,29 @@
 	th {
 		color: var(--muted);
 		text-align: left;
+	}
+
+	.checkmark {
+		color: var(--ok);
+		width: 1.1em;
+		height: 1.1em;
+		vertical-align: middle;
+	}
+
+	.overview-table th:first-child {
+		width: 25%;
+	}
+
+	.user-management-table th:nth-child(1) { width: 30%; }
+	.user-management-table th:nth-child(2) { width: 20%; }
+	.user-management-table th:nth-child(3) { width: 17%; }
+	.user-management-table th:nth-child(4) { width: 13%; }
+	.user-management-table th:nth-child(5) { width: 20%; }
+
+	.user-management-table td:first-child {
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
 	}
 	code {
 		background: #2b292d;
