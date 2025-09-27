@@ -11,6 +11,10 @@
 		| undefined;
 </script>
 
+<svelte:head>
+	<title>register - bridges</title>
+</svelte:head>
+
 <main>
 	<header>
 		<h1>Bridges</h1>
