@@ -1,226 +1,198 @@
-<script lang="ts">
-	// Correct import for navigation
-	import { goto } from '$app/navigation'; // Correct import
-	import type { PageData } from './$types';
-  
-	// Export the data prop received from the server load function
-	export let data: PageData;
-  </script>
-  
-  <main>
-	<header class="page-header">
-	  <div>
-		<h1>bridges / dashboard</h1>
-		<p class="subtitle">welcome, <strong>@{data.user?.username ?? 'guest'}</strong> – minimal overview + quick actions</p>
-	  </div>
-  
-	  <!-- logout button -->
-	  <nav class="nav-links">
-		<form method="POST" action="?/logout" use:enhance class="logout-form">
-		  <button type="submit" class="logout-link">Logout</button>
-		</form>
-	  </nav>
-	</header>
-  
-	<!-- quick -->
-	<section class="section-box">
-	  <h2 class="section-title">quick</h2>
-	  <div class="section-content">
-		<!-- Full-width Upload button -->
-		<button on:click={() => goto('/upload')} class="action-btn upload-page-btn full-width">
-		  Upload
-		</button>
-  
-		<!-- Quick actions: only your links button remains -->
-		<div class="quick-actions">
-		  <button on:click={() => goto('/links')} class="action-btn links-btn">your links</button>
+<script>
+	export let data;
+</script>
+
+<svelte:head>
+	<title>dashboard</title>
+</svelte:head>
+
+<main>
+	<header class="between">
+		<div>
+			<h1>bridges / dashboard</h1>
+			{#if data.user}
+				<div class="muted">
+					welcome, @{data.user.username} — minimal overview + quick actions
+				</div>
+			{/if}
 		</div>
-	  </div>
+		<nav>
+			<form method="POST" action="?/logout">
+				<button type="submit" class="link-button">Logout</button>
+			</form>
+		</nav>
+	</header>
+
+	<section>
+		<fieldset>
+			<legend>OVERVIEW</legend>
+			<table>
+				<tbody>
+					<tr>
+						<th>last login</th>
+						<td class="nowrap">2025-09-27 19:43</td>
+						<th>account status</th>
+						<td>OK</td>
+					</tr>
+					<tr>
+						<th>server status</th>
+						<td>NOMINAL</td>
+						<th>data integrity</th>
+						<td>OK</td>
+					</tr>
+				</tbody>
+			</table>
+		</fieldset>
 	</section>
-  
-	<!-- overview -->
-	<section class="section-box">
-	  <h2 class="section-title">overview</h2>
-	  <div class="section-content">
-		<table>
-		  <tbody>
-			<tr>
-			  <td>storage used</td>
-			  <td>{data.storageUsed > 0 ? `${data.storageUsed.toFixed(2)} MB` : '0 MB'}</td>
-			  <td>files</td>
-			  <td>{data.totalFiles}</td>
-			</tr>
-			<tr>
-			  <td>links active</td>
-			  <td>{data.totalLinks}</td>
-			  <td>expiring soon</td>
-			  <td>{data.expiringSoon}</td>
-			</tr>
-			<tr>
-			  <td>views (30d)</td>
-			  <td>{data.totalViews.toLocaleString()}</td>
-			  <td>downloads (30d)</td>
-			  <td>{data.totalDownloads.toLocaleString()}</td>
-			</tr>
-			<tr>
-			  <td>last login</td>
-			  <td>{data.user?.lastLogin ? new Date(data.user.lastLogin).toLocaleString() : 'Never'}</td>
-			  <td>account status</td>
-			  <td>OK</td>
-			</tr>
-		  </tbody>
-		</table>
-	  </div>
+
+	<section>
+		<fieldset>
+			<legend>QUICK ACTIONS</legend>
+			<div class="actions">
+				<a href="/links" class="button your-links">your links</a>
+			</div>
+		</fieldset>
 	</section>
-  </main>
-  
-  <style>
-	:global(:root) {
-	  --bg: #232025;
-	  --fg: #efd5c5;
-	  --muted: #8f8886;
-	  --line: #3b393e;
-	  --accent: #6fb3c0;
-	  --dropdown-bg: #333036;
-	  --dropdown-fg: #f5e5d5;
-	  --error: #e57373;
-	  --success: #81c784;
-	  --border-color: #4a454e;
+
+	<section>
+		<fieldset>
+			<legend>SCRATCH PAD</legend>
+			<textarea placeholder="Type anything..."></textarea>
+		</fieldset>
+	</section>
+</main>
+
+<style>
+	:root {
+		--bg: #232025;
+		--fg: #efd5c5;
+		--muted: #8f8886;
+		--line: #3b393e;
+		--accent: #6fb3c0;
+		--warn: #d09950;
 	}
+
+	:global(*),
+	:global(*::before),
+	:global(*::after) {
+		box-sizing: border-box;
+	}
+
 	:global(body) {
-	  margin: 0;
-	  background: var(--bg);
-	  color: var(--fg);
-	  font: 15px/1.5 monospace;
+		margin: 0;
+		background: var(--bg);
+		color: var(--fg);
+		font: 15px/1.5 monospace;
 	}
-  
+
 	main {
-	  max-width: 900px;
-	  margin: 5vh auto 0;
-	  padding: 0 1rem 5rem;
+		max-width: 980px;
+		margin: 6vh auto 0;
+		padding: 0 1rem;
 	}
-  
-	/* header with simple text navigation */
-	.page-header {
-	  display: flex;
-	  justify-content: space-between;
-	  align-items: flex-start;
-	  gap: 1rem;
-	  margin-bottom: 1rem;
-	}
+
 	h1 {
-	  font-size: 1.1rem;
-	  margin: 0 0 0.25rem 0;
+		font-size: 1rem;
+		margin: 0 0 0.25rem 0;
+		font-weight: normal;
 	}
-	.subtitle {
-	  margin: 0;
-	  color: var(--muted);
-	  font-size: 0.9rem;
+
+	.muted {
+		color: var(--muted);
 	}
-	strong {
-	  color: var(--accent);
+
+	fieldset {
+		border: 1px solid var(--line);
+		padding: 1rem;
+		margin: 0 0 1.5rem 0;
 	}
-  
-	/* Simple text navigation */
-	.nav-links {
-	  display: flex;
-	  gap: 1.5rem;
-	  align-items: center;
+
+	legend {
+		padding: 0 0.4rem;
+		color: var(--muted);
+		font-size: 0.85rem;
+		text-transform: uppercase;
 	}
-	.nav-link, .logout-link {
-	  color: var(--fg);
-	  text-decoration: none;
-	  font-size: 0.9rem;
-	  padding: 0.5rem 0.8rem;
-	  border-radius: 4px;
-	  transition: all 0.2s ease;
+
+	textarea {
+		width: 100%;
+		height: 150px;
+		padding: 0.5rem 0.6rem;
+		border: 1px solid var(--line);
+		background: #2b292d;
+		color: var(--fg);
+		resize: vertical;
+		font-family: monospace;
 	}
-	.nav-link:hover, .logout-link:hover {
-	  color: var(--accent);
-	  background: rgba(111, 179, 192, 0.1);
+
+	textarea:focus {
+		outline: none;
+		border-color: var(--accent);
 	}
-	.logout-link {
-	  background: transparent;
-	  border: none;
-	  padding: 0.5rem 0.8rem;
-	  cursor: pointer;
-	  font-size: 0.9rem;
+
+	.between {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		gap: 1rem;
+		margin-bottom: 2rem;
 	}
-	.logout-link:hover {
-	  color: var(--accent);
-	  background: rgba(111, 179, 192, 0.1);
+
+	.actions {
+		display: flex;
+		gap: 0.75rem;
 	}
-  
-	/* section title-on-border layout */
-	.section-box {
-	  margin: 2rem 0;
-	  position: relative;
+
+	.button {
+		display: inline-block;
+		padding: 0.75rem 1.5rem;
+		border: 1px solid var(--accent);
+		background: transparent;
+		color: var(--fg);
+		cursor: pointer;
+		text-align: center;
+		text-decoration: none;
+		width: 100%;
 	}
-	.section-title {
-	  font-size: 1rem;
-	  text-transform: uppercase;
-	  color: var(--muted);
-	  margin: 0;
-	  padding: 0 0.5rem;
-	  position: relative;
-	  top: 0.7rem;
-	  background: var(--bg);
-	  display: inline-block;
+
+	.button.your-links {
+		border-color: var(--warn);
 	}
-	.section-content {
-	  border: 1px solid var(--line);
-	  border-radius: 8px;
-	  padding: 1.2rem;
-	  margin-top: 0.8rem;
+
+	.button:focus-visible,
+	.link-button:focus-visible {
+		outline: 1px solid var(--accent);
+		outline-offset: 2px;
 	}
-  
-	/* Quick actions - Updated styling for your links button */
-	.quick-actions {
-	  display: flex;
-	  gap: 0.6rem;
-	  margin-top: 0.8rem;
+
+	.link-button {
+		background: none;
+		border: none;
+		padding: 0;
+		color: var(--muted);
+		font-family: monospace;
+		font-size: 15px;
+		cursor: pointer;
+		text-decoration: underline;
 	}
-	.action-btn {
-	  flex: 1;
-	  padding: 0.8rem 1.2rem;
-	  border: 2px solid var(--accent);
-	  background: transparent;
-	  color: var(--fg);
-	  cursor: pointer;
-	  border-radius: 6px;
-	  font-weight: bold;
-	  font-size: 0.9rem;
-	  text-align: center;
-	  transition: all 0.2s ease;
-	}
-	.action-btn:hover {
-	  background: var(--accent);
-	  color: var(--bg);
-	  transform: translateY(-2px);
-	}
-	.links-btn {
-	  border-color: #ff9800; /* Orange accent for links */
-	  color: #ff9800;
-	}
-	.links-btn:hover {
-	  background: #ff9800;
-	  color: var(--bg);
-	}
-  
-	/* Table styling */
+
 	table {
-	  width: 100%;
-	  border-collapse: collapse;
-	  font-size: 0.85rem;
+		width: 100%;
+		border-collapse: collapse;
 	}
+	th,
 	td {
-	  padding: 0.4rem 0.6rem;
-	  border: 1px solid var(--line);
+		padding: 0.45rem 0.6rem;
+		border: 1px solid var(--line);
+		vertical-align: middle;
 	}
-  
-	.full-width {
-	  width: 100%;
-	  justify-content: center; /* keeps text centered */
+	th {
+		color: var(--muted);
+		text-align: left;
+		font-weight: normal;
+		width: 15%;
 	}
-  </style>
-  
+	.nowrap {
+		white-space: nowrap;
+	}
+</style>
