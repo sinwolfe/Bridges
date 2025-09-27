@@ -64,7 +64,7 @@
 					{#if data.users?.length}
 						{#each data.users as u (u.id)}
 							<tr>
-								<td>@{u.username || u.email}</td>
+								<td><div class="scrollable-cell">@{u.username || u.email}</div></td>
 								<td class="nowrap center">{new Date(u.created).toLocaleDateString()}</td>
 								<td class="center">
 									{#if u.disabled}
@@ -240,11 +240,24 @@
 	.user-management-table th:nth-child(4) { width: 13%; }
 	.user-management-table th:nth-child(5) { width: 20%; }
 
-	.user-management-table td:first-child {
+	.scrollable-cell {
+		overflow-x: auto;
 		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipsis;
+		scrollbar-width: thin;
+		scrollbar-color: var(--accent) transparent;
 	}
+
+	.scrollable-cell::-webkit-scrollbar {
+		height: 4px;
+	}
+	.scrollable-cell::-webkit-scrollbar-track {
+		background: transparent;
+	}
+	.scrollable-cell::-webkit-scrollbar-thumb {
+		background-color: var(--accent);
+		border-radius: 20px;
+	}
+
 	code {
 		background: #2b292d;
 		border: 1px solid var(--line);
