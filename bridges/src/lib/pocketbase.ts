@@ -1,6 +1,7 @@
 import PocketBase from 'pocketbase';
+import { PUBLIC_PB_URL } from '$env/static/public';
 
-export const pb = new PocketBase("http://127.0.0.1:8090");
+export const pb = new PocketBase(PUBLIC_PB_URL);
 export default pb;
 
 // Only run this in the browser

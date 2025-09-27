@@ -13,11 +13,11 @@
 		<a href="/upload">upload</a>
 	{/if}
 
-	<a href="/about">about</a>
-
 	{#if data.user && data.user.isAdmin}
 		<a href="/admin">admin</a>
 	{/if}
+
+	<a href="/about">about</a>
 </footer>
 
 <style>
