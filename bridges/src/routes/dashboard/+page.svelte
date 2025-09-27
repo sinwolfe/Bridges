@@ -3,7 +3,7 @@
 </script>
 
 <svelte:head>
-	<title>dashboard</title>
+	<title>dashboard - bridges</title>
 </svelte:head>
 
 <main>
