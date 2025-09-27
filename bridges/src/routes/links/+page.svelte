@@ -36,6 +36,10 @@
 	};
 </script>
 
+<svelte:head>
+	<title>links - bridges</title>
+</svelte:head>
+
 <main>
 	<header>
 		<h1>Your Links</h1>
