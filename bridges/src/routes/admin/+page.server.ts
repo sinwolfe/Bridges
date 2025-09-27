@@ -1,4 +1,4 @@
-import { redirect } from '@sveltejs/kit';
+import { redirect, fail } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ locals }) => {
@@ -10,7 +10,7 @@ export const load: PageServerLoad = async ({ locals }) => {
         return { users };
     } catch (err) {
         console.error('Error fetching users:', err);
-        return { users: [] };
+        return { users: [], error: 'Could not fetch user data.' };
     }
 };
 
@@ -29,28 +29,21 @@ export const actions: Actions = {
             await locals.pb.collection('users').update(id, { isAdmin: !isAdmin });
         } catch (err) {
             console.error('Error toggling admin status:', err);
+            return fail(500, { message: 'Failed to toggle admin status.' });
         }
     },
 
-    toggleEnable: async ({ locals, request }) => {
+    toggleStatus: async ({ locals, request }) => {
         const form = await request.formData();
         const id = form.get('id') as string;
-        try {
-            // Enable user by setting disabled = false
-            await locals.pb.collection('users').update(id, { disabled: false });
-        } catch (err) {
-            console.error('Error enabling user:', err);
-        }
-    },
+        const isDisabled = form.get('disabled') === 'true';
 
-    toggleDisable: async ({ locals, request }) => {
-        const form = await request.formData();
-        const id = form.get('id') as string;
         try {
-            // Disable user by setting disabled = true
-            await locals.pb.collection('users').update(id, { disabled: true });
+            await locals.pb.collection('users').update(id, { disabled: !isDisabled });
+            return { success: true };
         } catch (err) {
-            console.error('Error disabling user:', err);
+            console.error('Error toggling user status:', err);
+            return fail(500, { message: `Failed to update user ${id}.` });
         }
     }
 };
