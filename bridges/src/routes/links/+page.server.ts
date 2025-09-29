@@ -5,10 +5,6 @@ import type { PageServerLoad } from './$types';
 
 // Make sure to accept 'url' as an argument here
 export const load: PageServerLoad = async ({ locals, url }) => {
-  // Redirect user to login if they're not logged in
-  if (!locals.user) {
-    throw redirect(303, '/login');
-  }
 
   try {
     // Fetch user links from PocketBase's 'links' collection

@@ -1,15 +1,5 @@
 import { redirect } from '@sveltejs/kit';
-import type { Actions, PageServerLoad } from './$types';
-
-export const load: PageServerLoad = async ({ locals }) => {
-	if (!locals.user) {
-		throw redirect(303, '/login');
-	}
-
-	return {
-		user: locals.user
-	};
-};
+import type { Actions } from './$types';
 
 export const actions: Actions = {
 	logout: async ({ locals }) => {

@@ -1,11 +1,9 @@
-// src/routes/go/[slug]/+page.server.ts
-
 import { error, fail, redirect, isRedirect } from '@sveltejs/kit';
-import pb from '$lib/pocketbase';
 
-export async function load({ params }) {
+export async function load({ params, locals }) {
     try {
-        const link = await pb.collection('links').getFirstListItem(`slug="${params.slug}"`, {
+        // REVAMPED: Using `locals.pb` instead of the imported `pb`
+        const link = await locals.pb.collection('links').getFirstListItem(`slug="${params.slug}"`, {
             expand: 'upload_id'
         });
 
@@ -16,20 +14,20 @@ export async function load({ params }) {
             throw error(410, 'This link has expired.');
         }
 
-        // --- CORRECTED CHECK ---
         // A link is only expired if its limit is exactly 0. A limit of -1 is infinite.
         if (upload.downloadLimit === 0) {
             throw error(410, 'This link has reached its download limit.');
         }
         
         if (upload.visibility !== 'password') {
-            // --- CORRECTED DECREMENT ---
             // Only decrement if the limit is a positive number (greater than 0).
             if (upload.downloadLimit > 0) {
-                await pb.collection('uploads').update(upload.id, { 'downloadLimit-': 1 });
+                // REVAMPED: Using `locals.pb`
+                await locals.pb.collection('uploads').update(upload.id, { 'downloadLimit-': 1 });
             }
             
-            const fileUrl = pb.files.getURL(upload, upload.file);
+            // REVAMPED: Using `locals.pb`
+            const fileUrl = locals.pb.files.getURL(upload, upload.file);
             throw redirect(302, fileUrl);
         }
 
@@ -41,6 +39,7 @@ export async function load({ params }) {
 
     } catch (err: any) {
         if (isRedirect(err)) throw err;
+        // Gracefully handle specific errors PocketBase might throw
         if (err.status === 410) throw error(err.status, err.body.message);
         console.error("Link lookup error:", err);
         throw error(404, 'This link does not exist.');
@@ -48,18 +47,21 @@ export async function load({ params }) {
 }
 
 export const actions = {
-    default: async ({ request, params }) => {
+    // REVAMPED: Added `locals` to the action's parameters
+    default: async ({ request, params, locals }) => {
         const formData = await request.formData();
         const password = formData.get('password');
         if (!password) return fail(400, { error: 'Password cannot be empty.' });
 
         try {
-            const link = await pb.collection('links').getFirstListItem(`slug="${params.slug}"`);
+            // REVAMPED: Using `locals.pb`
+            const link = await locals.pb.collection('links').getFirstListItem(`slug="${params.slug}"`);
             if (!link.upload_id) throw new Error("Link record is missing the upload relation.");
             
-            const upload = await pb.collection('uploads').getOne(link.upload_id);
+            // REVAMPED: Using `locals.pb`
+            const upload = await locals.pb.collection('uploads').getOne(link.upload_id);
 
-            // --- CORRECTED RE-VERIFICATION CHECKS ---
+            // Re-verify the link's status as a security measure
             if (upload.expires && new Date() > new Date(upload.expires)) {
                 return fail(410, { error: 'This link has expired.' });
             }
@@ -70,18 +72,20 @@ export const actions = {
                 return fail(401, { error: 'Incorrect password. Please try again.' });
             }
 
-            // --- CORRECTED DECREMENT ---
+            // Decrement the download limit if it's a positive number
             if (upload.downloadLimit > 0) {
-                await pb.collection('uploads').update(upload.id, { 'downloadLimit-': 1 });
+                // REVAMPED: Using `locals.pb`
+                await locals.pb.collection('uploads').update(upload.id, { 'downloadLimit-': 1 });
             }
-
-            const fileUrl = pb.files.getURL(upload, upload.file);
+            
+            // REVAMPED: Using `locals.pb`
+            const fileUrl = locals.pb.files.getURL(upload, upload.file);
             throw redirect(303, fileUrl);
 
         } catch (err: any) {
             if (isRedirect(err)) throw err;
             console.error("ERROR during password verification action:", err);
-            return fail(500, { error: 'An server error occurred.' });
+            return fail(500, { error: 'An internal server error occurred.' });
         }
     }
 };

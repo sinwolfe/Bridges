@@ -1,17 +1,6 @@
 import { fail, redirect } from '@sveltejs/kit';
-import type { Actions, PageServerLoad } from './$types';
+import type { Actions } from './$types';
 import { ClientResponseError } from 'pocketbase';
-
-export const load: PageServerLoad = async ({ locals }) => {
-  // send to dashboard if alr logged in	
-  if (locals.user) {
-    if (locals.user.isAdmin) {
-        throw redirect(302, '/admin');
-    }
-    throw redirect(302, '/dashboard');
-  }
-  return {};
-};
 
 export const actions: Actions = {
   login: async ({ request, locals }) => {
