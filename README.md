@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/sinwolfe/Bridges/refs/heads/main/images/bridges.png" alt="Bridges logo" width="128">
+  <img src="images/bridges_512.webp" alt="Bridges logo" width="256">
 </p>
 
 <h1 align="center">Bridges</h1>
