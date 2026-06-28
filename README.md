@@ -4,6 +4,12 @@
 
 <h1 align="center">Bridges</h1>
 
+<p align="center">
+  <img src="https://img.shields.io/badge/Svelte-frontend-FF3E00?logo=svelte&logoColor=white" alt="Svelte">
+  <img src="https://img.shields.io/badge/PocketBase-backend%20%26%20storage-B8DBE8" alt="PocketBase">
+  <img src="https://img.shields.io/badge/License-AGPLv3-blue" alt="License: AGPLv3">
+</p>
+
 # Bridges
 * Self-hostable
 * No logging or tracking
