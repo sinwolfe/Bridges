@@ -10,7 +10,6 @@
   <img src="https://img.shields.io/badge/License-AGPLv3-blue" alt="License: AGPLv3">
 </p>
 
-# Bridges
 * Self-hostable
 * No logging or tracking
 * Flexible file expiry: by time, download count, or after sharing
