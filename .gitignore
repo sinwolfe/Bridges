@@ -10,9 +10,8 @@ node_modules/
 .svelte-kit/
 build/
 
-# Media
-pocketbase/pb_data/storage
-pocketbase/pb_data/backups
+# Pocketbase
+pocketbase/pb_data/
 
 # Misc
 .DS_Store
