@@ -1,8 +1,6 @@
 ![bridges logo](https://raw.githubusercontent.com/sinwolfe/Bridges/refs/heads/main/images/bridges_128px.png)
 
 # Bridges
-
-## Overview
 * Self-hostable
 * No logging or tracking
 * Flexible file expiry: by time, download count, or after sharing
