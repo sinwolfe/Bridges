@@ -12,7 +12,7 @@ build/
 
 # Pocketbase
 pocketbase/pb_data/
-pocketbase/data.db/
+pocketbase/data.db
 
 # Misc
 .DS_Store
