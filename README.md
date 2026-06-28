@@ -2,11 +2,8 @@
 
 # Bridges
 
-* [Overview](#overview)
-* [Built with](#built-with)
-* [License](#license)
-
-* Self hostable
+## Overview
+* Self-hostable
 * No logging or tracking
 * Flexible file expiry: by time, download count, or after sharing
 
