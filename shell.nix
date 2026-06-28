@@ -2,6 +2,8 @@
 
 pkgs.mkShell {
   nativeBuildInputs = [
-    pkgs.nodejs_24
+    pkgs.nodejs_26
+    pkgs.pnpm
+    pkgs.pocketbase
   ];
 }
