@@ -1,4 +1,6 @@
-![bridges logo](https://raw.githubusercontent.com/sinwolfe/Bridges/refs/heads/main/images/bridges_128px.png)
+<p align="center">
+  <img src="https://raw.githubusercontent.com/sinwolfe/Bridges/refs/heads/main/images/bridges_128px.png" alt="Bridges logo" width="96">
+</p>
 
 # Bridges
 * Self-hostable
